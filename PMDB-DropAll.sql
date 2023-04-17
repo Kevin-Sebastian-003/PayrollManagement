@@ -1,0 +1,16 @@
+drop table if exists members_t;
+drop table if exists member_address_t;
+drop table if exists contact_t;
+drop table if exists departments_t;
+drop table if exists employees_t;
+drop table if exists role_t;
+drop table if exists employee_bank_t;
+drop table if exists salary_t;
+drop table if exists budget_allocation_t;
+drop table if exists deductions_t;
+drop table if exists allowances_t;
+drop table if exists attendance_t;
+drop table if exists ssn_itin_t;
+drop table if exists tax_bracket_t;
+DROP TABLE IF EXISTS `contribution401k_t`;
+DROP TABLE IF EXISTS `insurance_t`;

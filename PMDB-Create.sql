@@ -130,7 +130,7 @@ create table salary_breakdown_t (
     overtime_pay_total decimal(13,2),
     hourly_rate decimal(5,2),
     overtime_rate decimal(13,2),
-    insurance_id decimal(13,2),
+    insurance_id int(8),
 	allowance_1_id int(8),
     allowance_2_id int(8),
     allowance_3_id int(8),
@@ -142,6 +142,7 @@ create table salary_breakdown_t (
 	primary key (salary_id),
     foreign key (salary_id) references salary_t(salary_id),
     foreign key (attendance_id) references attendance_t(attndance_id),
+    foreign key (insurance_id) references insurance_t(insurance_id),
     foreign key (allowance_1_id) references allowances_t(allowance_id),
 	foreign key (allowance_2_id) references allowances_t(allowance_id),
     foreign key (allowance_3_id) references allowances_t(allowance_id),
@@ -160,7 +161,8 @@ create table budget_allocation_t (
     used_budget	decimal(10,4),
 	total_salary_paid decimal(14,2),
     no_employees int(8),
-	primary key (budget_id)
+	primary key (budget_id),
+    foreign key (department_id) references departments_t(department_id)
 )ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 
 

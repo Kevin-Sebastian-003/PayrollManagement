@@ -82,7 +82,8 @@ create table employees_t (
     insurance_id int(8),
     role_id	varchar(8),
 	primary key (employee_id),
-	foreign key (employee_id) references members_t(member_id)
+	foreign key (employee_id) references members_t(member_id),
+    foreign key (role_id) references role_t(role_id)
 )ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 
 drop table if exists role_t;
@@ -111,16 +112,42 @@ create table employee_bank_t (
 
 drop table if exists salary_t;
 create table salary_t (
-	member_id int(8),
+	salary_id int(25),
+	employee_id int(8),
 	salary_month date,
-    base_salary	decimal(13,2),
-    insurance decimal(13,2),
-    overtime_pay decimal(13,2),
-	allowance decimal(13,2),
-    personal_tax decimal(13,2),
-    before_tax_pay decimal(13,2),
-    after_tax_pay decimal(13,2),
-	primary key (member_id,salary_month)
+    salary_amount decimal(13,2),
+	primary key (salary_id),
+    foreign key (employee_id) references employees_t(employee_id)
+)ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+
+
+drop table if exists salary_breakdown_t;
+create table salary_breakdown_t (
+	salary_id int(25),
+    attendance_id int(8),
+    basic_pay decimal(13,2),
+    hourle_pay_total decimal(13,2),
+    overtime_pay_total decimal(13,2),
+    hourly_rate decimal(5,2),
+    overtime_rate decimal(13,2),
+    insurance_id decimal(13,2),
+	allowance_1_id int(8),
+    allowance_2_id int(8),
+    allowance_3_id int(8),
+    deduction_1_id int(8),
+    deduction_2_id int(8),
+    deduction_3_id int(8),
+    tax_percentage decimal(13,2),
+    tax_on_amount decimal(13,2),
+	primary key (salary_id),
+    foreign key (salary_id) references salary_t(salary_id),
+    foreign key (attendance_id) references attendance_t(attndance_id),
+    foreign key (allowance_1_id) references allowances_t(allowance_id),
+	foreign key (allowance_2_id) references allowances_t(allowance_id),
+    foreign key (allowance_3_id) references allowances_t(allowance_id),
+    foreign key (deduction_1_id) references deductions_t(deduction_id),
+    foreign key (deduction_2_id) references deductions_t(deduction_id),
+    foreign key (deduction_3_id) references deductions_t(deduction_id)
 )ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 
 /*update count in employee insertion function*/
@@ -163,6 +190,7 @@ create table attendance_t (
 	attendance_id int(25)auto_increment,
 	employee_id	int(8),
 	daysattended int(8),
+    overtime_hours int(8),
 	totaldays int(8),
 	attendance_month date,
     primary key (attendance_id),

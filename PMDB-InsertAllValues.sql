@@ -65,25 +65,25 @@ DELETE FROM contact_t;
 INSERT INTO contact_t VALUES (DEFAULT, 1, 1, 'John_Doe@yahoo.com', NULL, '4793009222', NULL,'linkedin.com/John_Doe', NULL);
 INSERT INTO contact_t VALUES (DEFAULT, 2, 2, 'Jane_Doe@gmail.com', NULL, '4528998888', NULL,'linkedin.com/Jane_Doe', NULL);
 INSERT INTO contact_t VALUES (DEFAULT, 3, 3, 'Mike_Smith@hotmail.com', NULL, '9823333400', NULL,'linkedin.com/Mike_Smith', NULL);
-INSERT INTO contact_t VALUES (DEFAULT, 4, 3, 'Susan_Johnson@yahoo.com', NULL, '4438233400', NULL,'linkedin.com/Susan_Johnson', NULL);
-INSERT INTO contact_t VALUES (DEFAULT, 5, 3, 'David_Brown@gmail.com', NULL, '6795673400', NULL,'linkedin.com/David_Brown', NULL);
-INSERT INTO contact_t VALUES (DEFAULT, 6, 3, 'Emily_Garcia@outlook.com', NULL, '7896843400', NULL,'linkedin.com/Emily_Garcia', NULL);
-INSERT INTO contact_t VALUES (DEFAULT, 7, 3, 'Daniel_Wilson@hotmail.com', NULL, '4236733400', NULL,'linkedin.com/Daniel_Wilson', NULL);
-INSERT INTO contact_t VALUES (DEFAULT, 8, 3, 'Megan_Taylor@gmail.com', NULL, '9704333400', NULL,'linkedin.com/Megan_Taylor', NULL);
-INSERT INTO contact_t VALUES (DEFAULT, 9, 3, 'Brandon_Davis@hotmail.com', NULL, '9726333400', NULL,'linkedin.com/Brandon_Davis', NULL);
-INSERT INTO contact_t VALUES (DEFAULT, 10, 3, 'Rachel_Martinez@gmail.com', NULL, '97223590400', NULL,'linkedin.com/Rachel_Martinez', NULL);
+INSERT INTO contact_t VALUES (DEFAULT, 4, 4, 'Susan_Johnson@yahoo.com', NULL, '4438233400', NULL,'linkedin.com/Susan_Johnson', NULL);
+INSERT INTO contact_t VALUES (DEFAULT, 5, 5, 'David_Brown@gmail.com', NULL, '6795673400', NULL,'linkedin.com/David_Brown', NULL);
+INSERT INTO contact_t VALUES (DEFAULT, 6, 6, 'Emily_Garcia@outlook.com', NULL, '7896843400', NULL,'linkedin.com/Emily_Garcia', NULL);
+INSERT INTO contact_t VALUES (DEFAULT, 7, 7, 'Daniel_Wilson@hotmail.com', NULL, '4236733400', NULL,'linkedin.com/Daniel_Wilson', NULL);
+INSERT INTO contact_t VALUES (DEFAULT, 8, 8, 'Megan_Taylor@gmail.com', NULL, '9704333400', NULL,'linkedin.com/Megan_Taylor', NULL);
+INSERT INTO contact_t VALUES (DEFAULT, 9, 9, 'Brandon_Davis@hotmail.com', NULL, '9726333400', NULL,'linkedin.com/Brandon_Davis', NULL);
+INSERT INTO contact_t VALUES (DEFAULT, 10, 10, 'Rachel_Martinez@gmail.com', NULL, '97223590400', NULL,'linkedin.com/Rachel_Martinez', NULL);
 
 DELETE FROM departments_t;
-INSERT INTO departments_t VALUES (DEFAULT, 'Accounting Dept', 1, 'Senior Accountant');
-INSERT INTO departments_t VALUES (DEFAULT, 'School of Management', 2, 'Assistant Professor');
-INSERT INTO departments_t VALUES (DEFAULT, 'School of Engineering', 3, 'Clinical Professor');
-INSERT INTO departments_t VALUES (DEFAULT, 'School of Art', 4, 'Assistant Professor');
-INSERT INTO departments_t VALUES (DEFAULT, 'School of Social Science', 5, 'Associate Professor');
-INSERT INTO departments_t VALUES (2, 'School of Management', 6, 'Clinical Professor');
-INSERT INTO departments_t VALUES (2, 'School of Management', 7, 'Academic Advisor');
-INSERT INTO departments_t VALUES (6, 'Career Center', 8, 'Associate Director');
-INSERT INTO departments_t VALUES (4, 'School of Art', 9, 'Professor');
-INSERT INTO departments_t VALUES (7, 'IT Center', 10, 'Director');
+INSERT INTO departments_t VALUES (1, 'Accounting Dept', 1, 'Senior Accountant');
+INSERT INTO departments_t VALUES (2, 'School of Management', 2, 'Assistant Professor');
+INSERT INTO departments_t VALUES (3, 'School of Engineering', 3, 'Clinical Professor');
+INSERT INTO departments_t VALUES (4, 'School of Art', 4, 'Assistant Professor');
+INSERT INTO departments_t VALUES (5, 'School of Social Science', 5, 'Associate Professor');
+INSERT INTO departments_t VALUES (6, 'School of Management', 6, 'Clinical Professor');
+INSERT INTO departments_t VALUES (7, 'School of Management', 7, 'Academic Advisor');
+INSERT INTO departments_t VALUES (8, 'Career Center', 8, 'Associate Director');
+INSERT INTO departments_t VALUES (9, 'School of Art', 9, 'Professor');
+INSERT INTO departments_t VALUES (10, 'IT Center', 10, 'Director');
 
 DELETE FROM employees_t;
 INSERT INTO employees_t VALUES (1, '2013-2-23', NULL, 5989.00, 1, 1, 2, 43566345, 1);
@@ -132,50 +132,80 @@ INSERT INTO salary_t VALUES (7, '2023-3-1', 6700.00, 450.00, 000.00, 200.00, 536
 INSERT INTO salary_t VALUES (8, '2023-3-1', 7800.00, 520.00, 100.00, 500.00, 624.00, 8400.00, 7256.00);
 INSERT INTO salary_t VALUES (9, '2023-3-1', 10200.00, 550.00, 250.00, 800.00, 816.00, 11250.00, 9884.00);
 INSERT INTO salary_t VALUES (10, '2023-3-1', 4450.00, 450.00, 300.00, 200.00, 356.00, 4950.00, 4144.00);
-/*
-INSERT INTO members_t VALUES (NULL, 'John', 'Doe', 1, 'USA', 'Texas', '1990-01-01', 'Male', CURRENT_TIMESTAMP, NULL, NULL);
-INSERT INTO members_t VALUES (NULL, 'Jane', 'Smith', 2, 'USA', 'Texas', '1985-05-10', 'Female', CURRENT_TIMESTAMP, NULL, NULL);
-INSERT INTO members_t VALUES (NULL, 'Michael', 'Johnson', 3, 'USA', 'Texas', '1995-12-25', 'Male', CURRENT_TIMESTAMP, NULL, NULL);
-INSERT INTO members_t VALUES (NULL, 'Emily', 'Davis', 1, 'USA', 'Texas', '1988-09-15', 'Female', CURRENT_TIMESTAMP, NULL, NULL);
-INSERT INTO members_t VALUES (NULL, 'Robert', 'Lee', 2, 'USA', 'Texas', '1975-03-20', 'Male', CURRENT_TIMESTAMP, '2022-01-01', NULL);
-INSERT INTO members_t VALUES (NULL, 'Sarah', 'Johnson', 3, 'USA', 'Texas', '1982-11-30', 'Female', CURRENT_TIMESTAMP, '2022-03-15', NULL);
-INSERT INTO members_t VALUES (NULL, 'William', 'Clark', 1, 'USA', 'Texas', '1998-07-18', 'Male', CURRENT_TIMESTAMP, NULL, NULL);
-INSERT INTO members_t VALUES (NULL, 'Amanda', 'Wilson', 2, 'USA', 'Texas', '1992-04-05', 'Female', CURRENT_TIMESTAMP, NULL, NULL);
 
-INSERT INTO member_address_t VALUES (NULL, 1, '100 Pkwy', 'apt 330', 'Austin', '76300', 'Texas', 'USA');
-INSERT INTO member_address_t VALUES (NULL, 2, '4354 Helen Dr', NULL, 'Houston', '71300', 'Texas', 'USA');
-INSERT INTO member_address_t VALUES (NULL, 3, '828 Chesnut Dr', NULL, 'Miami', '41320', 'Florida', 'USA');
 
-INSERT INTO contact_t VALUES (NULL, 1, 1, 'John_Doe@yahoo.com', NULL, '4793009222', NULL,'linkedin.com/John_Doe', NULL);
-INSERT INTO contact_t VALUES (NULL, 2, 2, 'Jane_Smith@gmail.com', NULL, '4528998888', NULL,'linkedin.com/Jane_Smith', NULL);
-INSERT INTO contact_t VALUES (NULL, 3, 3, 'Michael_Johnson@hotmail.com', NULL, '9823333400', NULL,'linkedin.com/Michael_Johnson', NULL);
+DELETE FROM budget_allocation_t;
+INSERT INTO budget_allocation_t VALUES (DEFAULT, '2023-3-1', 1, 589700.00, 432000.00, 372300.00, 62);
+INSERT INTO budget_allocation_t VALUES (DEFAULT, '2023-3-1', 2, 458930.00, 362000.00, 284500.00, 55);
+INSERT INTO budget_allocation_t VALUES (DEFAULT, '2023-3-1', 3, 652314.00, 523000.00, 305500.00, 75);
+INSERT INTO budget_allocation_t VALUES (DEFAULT, '2023-3-1', 4, 458230.00, 450060.00, 395050.00, 50);
+INSERT INTO budget_allocation_t VALUES (DEFAULT, '2023-3-1', 5, 693210.00, 605050.00, 597000.00, 35);
+INSERT INTO budget_allocation_t VALUES (DEFAULT, '2023-3-1', 6, 854630.00, 705000.00, 680050.00, 40);
+INSERT INTO budget_allocation_t VALUES (DEFAULT, '2023-3-1', 7, 752120.00, 685420.00, 320015.00, 50);
+INSERT INTO budget_allocation_t VALUES (DEFAULT, '2023-2-1', 1, 652300.00, 354060.00, 320050.00, 62);
+INSERT INTO budget_allocation_t VALUES (DEFAULT, '2023-2-1', 2, 320520.00, 320000.00, 310000.00, 55);
+INSERT INTO budget_allocation_t VALUES (DEFAULT, '2023-2-1', 3, 420010.00, 405600.00, 382300.00, 75);
 
-INSERT INTO departments_t VALUES (NULL, 'Accounting Dept', 1, 'Senior Accountant');
-INSERT INTO departments_t VALUES (NULL, 'School of Management', 2, 'Assistant Professor');
+DELETE FROM deductions_t;
+INSERT INTO deductions_t VALUES (1, 'sick leave deduction', 'deduction for taking a sick leave', 100.00);
+INSERT INTO deductions_t VALUES (2, 'Parental Leave deduction', 'deduction for taking a Parental leave', 320.00);
+INSERT INTO deductions_t VALUES (3, 'Paternity leave deduction', 'deduction for taking a Paternity leave', 100.00);
+INSERT INTO deductions_t VALUES (4, 'Annual  leave deduction', 'deduction for taking a Annual leave', 140.00);
 
-INSERT INTO employees_t VALUES (1, '2013-2-23', NULL, 5989.65, 1, 1, 2, 43566345, 1);
-INSERT INTO employees_t VALUES (2, '2017-6-1', NULL, 4200.00, 0, 0, 0, 79806789, 6);
+DELETE FROM allowances_t;
+INSERT INTO allowances_t VALUES (1, 'summer class allowance', 'allowance for participating summer semester classes', 500.00);
+INSERT INTO allowances_t VALUES (2, 'Transport allowance', 'allowance for monthly trasportation', 300.00);
+INSERT INTO allowances_t VALUES (3, 'Travel allowance', 'allowance for traveling', 540.00);
+INSERT INTO allowances_t VALUES (4, 'Housing allowance', 'allowance for house rent', 600.00);
+INSERT INTO allowances_t VALUES (5, 'Medical allowance', 'allowance for the cost of medical care, private healthcare, and other related expenses', 500.00);
 
-INSERT INTO role_t VALUES (NULL, 'Faculty', 'Professor', 1, 1);
-INSERT INTO role_t VALUES (NULL, 'administation', 'Campus maintenance', 1, 1);
+DELETE FROM attendance_t;
+INSERT INTO attendance_t VALUES (DEFAULT, 1, 22, 22, '2023-1-30');
+INSERT INTO attendance_t VALUES (DEFAULT, 2, 22, 22, '2023-1-30');
+INSERT INTO attendance_t VALUES (DEFAULT, 3, 22, 22, '2023-1-30');
+INSERT INTO attendance_t VALUES (DEFAULT, 4, 21, 22, '2023-1-30');
+INSERT INTO attendance_t VALUES (DEFAULT, 5, 22, 22, '2023-1-30');
+INSERT INTO attendance_t VALUES (DEFAULT, 6, 22, 22, '2023-1-30');
+INSERT INTO attendance_t VALUES (DEFAULT, 7, 22, 22, '2023-1-30');
+INSERT INTO attendance_t VALUES (DEFAULT, 8, 20, 22, '2023-1-30');
+INSERT INTO attendance_t VALUES (DEFAULT, 9, 22, 22, '2023-1-30');
+INSERT INTO attendance_t VALUES (DEFAULT, 10, 22, 22, '2023-1-30');
 
-INSERT INTO employee_bank_t VALUES (1, 25, 'Bank of America', 40668902, '11000800');
-INSERT INTO employee_bank_t VALUES (2, 3682, 'Wells Fargo', 563678458, '38294884');
+DELETE FROM ssn_itin_t;
+INSERT INTO ssn_itin_t VALUES (1, '449-467-2654', '958-78-3652');
+INSERT INTO ssn_itin_t VALUES (2, '433-439-2634', '934-78-5654');
+INSERT INTO ssn_itin_t VALUES (3, '449-467-3546', '958-76-4543');
+INSERT INTO ssn_itin_t VALUES (4, '440-448-4867', '958-75-5462');
+INSERT INTO ssn_itin_t VALUES (5, '449-467-6354', '958-75-4563');
+INSERT INTO ssn_itin_t VALUES (6, '449-467-8452', '988-74-1245');
+INSERT INTO ssn_itin_t VALUES (7, '521-524-5674', '968-78-7845');
+INSERT INTO ssn_itin_t VALUES (8, '449-467-1254', '957-77-4528');
+INSERT INTO ssn_itin_t VALUES (9, '449-467-6587', '958-79-3655');
+INSERT INTO ssn_itin_t VALUES (10, '531-539-9874', '957-72-4785');
 
-INSERT INTO salary_t VALUES (1, '2023-3-1', 5200.00, 450.00, 300.00, 200.00, 162.00, 6150.00, 6088.00);
+DELETE FROM tax_bracket_t;
+INSERT INTO tax_bracket_t VALUES ('State', '2021-1-1', '2022-1-1', 3000.00, 4000.00, 0.06);
+INSERT INTO tax_bracket_t VALUES ('State', '2021-1-1', '2022-1-1', 4100.00, 5000.00, 0.06);
+INSERT INTO tax_bracket_t VALUES ('State', '2021-1-1', '2022-1-1', 5100.00, 6500.00, 0.08);
+INSERT INTO tax_bracket_t VALUES ('State', '2021-1-1', '2022-1-1', 6600.00, 8000.00, 0.088);
+INSERT INTO tax_bracket_t VALUES ('State', '2021-1-1', '2022-1-1', 8100.00, 11000.00, 0.095);
+INSERT INTO tax_bracket_t VALUES ('State', '2021-1-1', '2022-1-1', 11000.00, 16000.00, 0.1);
+INSERT INTO tax_bracket_t VALUES ('State', '2021-1-1', '2022-1-1', 16000.00, 22000.00, 0.13);
+INSERT INTO tax_bracket_t VALUES ('Federal', '2021-1-1', '2022-1-1', 3000.00, 4000.00, 0.07);
+INSERT INTO tax_bracket_t VALUES ('Federal', '2021-1-1', '2022-1-1', 4100.00, 5000.00, 0.075);
+INSERT INTO tax_bracket_t VALUES ('Federal', '2021-1-1', '2022-1-1', 5100.00, 6500.00, 0.08);
+INSERT INTO tax_bracket_t VALUES ('Federal', '2021-1-1', '2022-1-1', 6600.00, 8000.00, 0.085);
+INSERT INTO tax_bracket_t VALUES ('Federal', '2021-1-1', '2022-1-1', 8100.00, 11000.00, 0.098);
+INSERT INTO tax_bracket_t VALUES ('Federal', '2021-1-1', '2022-1-1', 11000.00, 16000.00, 0.12);
+INSERT INTO tax_bracket_t VALUES ('Federal', '2021-1-1', '2022-1-1', 16000.00, 22000.00, 0.14);
 
-INSERT INTO budget_allocation_t VALUES (NULL, '2023-3-2', 22, 589700.00, 432000.00, 382300.00, 15);
+DELETE FROM contribution401k_t;
+INSERT INTO contribution401k_t VALUES (1, '2021-1-1', 500, 1, 46000.00);
+INSERT INTO contribution401k_t VALUES (2, '2021-1-1', 550, 2, 32000.00);
+INSERT INTO contribution401k_t VALUES (3, '2021-1-1', 550, 3, 20000.00);
+INSERT INTO contribution401k_t VALUES (4, '2021-1-1', 600, 4, 56000.00);
 
-INSERT INTO deductions_t VALUES (NULL, 'sick leave deduction', 'deduction for taking a sick leave', 100.00);
-
-INSERT INTO allowances_t VALUES (NULL, 'summer class allowance', 'allowance for participating summer semester classes', 500.00);
-
-INSERT INTO attendance_t VALUES (NULL, 22, 24, 26, '2023-1-10');
-
-INSERT INTO ssn_itin_t VALUES (1, '34678009009', '54289882388');
-
-INSERT INTO tax_bracket_t VALUES ('State', '2021-1-1', '2022-1-1', 4000.00, 4600.00, 0.092);
-
-INSERT INTO contribution401k_t VALUES (1, '2021-1-1', 3600, 1, 4600.00);
-
-INSERT INTO insurance_t VALUES (1240, 'Healthcare', 260, 188, 0.3, 'insurance for health care');
+DELETE FROM insurance_t;
+INSERT INTO insurance_t VALUES (1, 'Healthcare insurance', 600, 220, 0.3, 'insurance for health care');
+INSERT INTO insurance_t VALUES (2, 'Life insurance', 300, 80, 0.2, 'insurance for accidental death');
+INSERT INTO insurance_t VALUES (3, 'Disability insurance', 300, 95, 0.2, 'insurance replace your regular income under a covered illness/injury');

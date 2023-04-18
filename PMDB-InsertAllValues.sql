@@ -50,7 +50,88 @@ INSERT INTO members_t VALUES (DEFAULT, 'William', 'Rose', 4, 'USA', 'Texas', '19
 INSERT INTO members_t VALUES (DEFAULT, 'Victoria', 'Lee', 2, 'USA', 'Texas', '1995-01-28', 'Female', '2020-10-01', '2023-04-01', 50);
 
 
+DELETE FROM member_address_t;
+INSERT INTO member_address_t VALUES (DEFAULT, 1, '7600 OSBUN ST', NULL, 'FORT WORTH', '76116', 'Texas', 'USA');
+INSERT INTO member_address_t VALUES (DEFAULT, 2, '2001 COLLINS AVE', NULL, 'ABILENE', '79603', 'Texas', 'USA');
+INSERT INTO member_address_t VALUES (DEFAULT, 3, '9600 COUNTY ROAD 179', NULL, 'BEDIAS', '77831', 'Texas', 'USA');
+INSERT INTO member_address_t VALUES (DEFAULT, 5, '600 COUNTY ROAD', NULL, 'CROCKETT', '75835', 'Texas', 'USA');
+INSERT INTO member_address_t VALUES (DEFAULT, 6, '424 W FORK DR', NULL, 'ARLINGTON', '76012', 'Texas', 'USA');
+INSERT INTO member_address_t VALUES (DEFAULT, 7, '611 W 22ND ST', NULL, 'HOUSTON', '77008', 'Texas', 'USA');
+INSERT INTO member_address_t VALUES (DEFAULT, 8, '10300 KELBURN DR', NULL, 'HOUSTON', '77016', 'Texas', 'USA');
+INSERT INTO member_address_t VALUES (DEFAULT, 9, '14902 PRESTON RD', NULL, 'DALLAS', '75254', 'Texas', 'USA');
+INSERT INTO member_address_t VALUES (DEFAULT, 10, '1100 E FANNIN ST', NULL, 'BEEVILLE', '78102', 'Texas', 'USA');
 
+DELETE FROM contact_t;
+INSERT INTO contact_t VALUES (DEFAULT, 1, 1, 'John_Doe@yahoo.com', NULL, '4793009222', NULL,'linkedin.com/John_Doe', NULL);
+INSERT INTO contact_t VALUES (DEFAULT, 2, 2, 'Jane_Doe@gmail.com', NULL, '4528998888', NULL,'linkedin.com/Jane_Doe', NULL);
+INSERT INTO contact_t VALUES (DEFAULT, 3, 3, 'Mike_Smith@hotmail.com', NULL, '9823333400', NULL,'linkedin.com/Mike_Smith', NULL);
+INSERT INTO contact_t VALUES (DEFAULT, 4, 3, 'Susan_Johnson@yahoo.com', NULL, '4438233400', NULL,'linkedin.com/Susan_Johnson', NULL);
+INSERT INTO contact_t VALUES (DEFAULT, 5, 3, 'David_Brown@gmail.com', NULL, '6795673400', NULL,'linkedin.com/David_Brown', NULL);
+INSERT INTO contact_t VALUES (DEFAULT, 6, 3, 'Emily_Garcia@outlook.com', NULL, '7896843400', NULL,'linkedin.com/Emily_Garcia', NULL);
+INSERT INTO contact_t VALUES (DEFAULT, 7, 3, 'Daniel_Wilson@hotmail.com', NULL, '4236733400', NULL,'linkedin.com/Daniel_Wilson', NULL);
+INSERT INTO contact_t VALUES (DEFAULT, 8, 3, 'Megan_Taylor@gmail.com', NULL, '9704333400', NULL,'linkedin.com/Megan_Taylor', NULL);
+INSERT INTO contact_t VALUES (DEFAULT, 9, 3, 'Brandon_Davis@hotmail.com', NULL, '9726333400', NULL,'linkedin.com/Brandon_Davis', NULL);
+INSERT INTO contact_t VALUES (DEFAULT, 10, 3, 'Rachel_Martinez@gmail.com', NULL, '97223590400', NULL,'linkedin.com/Rachel_Martinez', NULL);
+
+DELETE FROM departments_t;
+INSERT INTO departments_t VALUES (DEFAULT, 'Accounting Dept', 1, 'Senior Accountant');
+INSERT INTO departments_t VALUES (DEFAULT, 'School of Management', 2, 'Assistant Professor');
+INSERT INTO departments_t VALUES (DEFAULT, 'School of Engineering', 3, 'Clinical Professor');
+INSERT INTO departments_t VALUES (DEFAULT, 'School of Art', 4, 'Assistant Professor');
+INSERT INTO departments_t VALUES (DEFAULT, 'School of Social Science', 5, 'Associate Professor');
+INSERT INTO departments_t VALUES (2, 'School of Management', 6, 'Clinical Professor');
+INSERT INTO departments_t VALUES (2, 'School of Management', 7, 'Academic Advisor');
+INSERT INTO departments_t VALUES (6, 'Career Center', 8, 'Associate Director');
+INSERT INTO departments_t VALUES (4, 'School of Art', 9, 'Professor');
+INSERT INTO departments_t VALUES (7, 'IT Center', 10, 'Director');
+
+DELETE FROM employees_t;
+INSERT INTO employees_t VALUES (1, '2013-2-23', NULL, 5989.00, 1, 1, 2, 43566345, 1);
+INSERT INTO employees_t VALUES (2, '2017-6-1', NULL, 7200.00, 1, 0, 0, 44677789, 2);
+INSERT INTO employees_t VALUES (3, '2010-6-30', NULL, 7600.00, 1, 0, 1, 23845789, 3);
+INSERT INTO employees_t VALUES (4, '2005-4-15', NULL, 6200.00, 1, 0, 2, 69426789, 4);
+INSERT INTO employees_t VALUES (5, '1998-7-13', NULL, 6780.00, 1, 0, 3, 46896764, 5);
+INSERT INTO employees_t VALUES (6, '1999-8-31', NULL, 7200.00, 1, 0, 2, 64347976, 6);
+INSERT INTO employees_t VALUES (7, '2004-3-21', NULL, 6700.00, 1, 0, 1, 34583696, 7);
+INSERT INTO employees_t VALUES (8, '2008-10-17', NULL, 7800.00, 1, 0, 1, 86542654, 8);
+INSERT INTO employees_t VALUES (9, '2017-8-13', NULL, 10200.00, 1, 0, 0, 34657427, 9);
+INSERT INTO employees_t VALUES (10, '2018-6-16', NULL, 4450.00, 0, 0, 0, 86543474, 10);
+
+DELETE FROM role_t;
+INSERT INTO role_t VALUES (DEFAULT, 'administation', 'Senior Accountant', 1, 1);
+INSERT INTO role_t VALUES (DEFAULT, 'Faculty', 'Assistant Professor', 1, 1);
+INSERT INTO role_t VALUES (DEFAULT, 'Faculty', 'Clinical Professor', 1, 1);
+INSERT INTO role_t VALUES (DEFAULT, 'Faculty', 'Assistant Professor', 1, 1);
+INSERT INTO role_t VALUES (DEFAULT, 'Faculty', 'Associate Professor', 1, 1);
+INSERT INTO role_t VALUES (DEFAULT, 'Faculty', 'Clinical Professor', 1, 1);
+INSERT INTO role_t VALUES (DEFAULT, 'Faculty', 'Academic Advisor', 1, 1);
+INSERT INTO role_t VALUES (DEFAULT, 'administation', 'Associate Director', 1, 1);
+INSERT INTO role_t VALUES (DEFAULT, 'Faculty', 'Professor', 1, 1);
+INSERT INTO role_t VALUES (DEFAULT, 'administation', 'Director', 1, 1);
+
+DELETE FROM employee_bank_t;
+INSERT INTO employee_bank_t VALUES (1, 1, 'Bank of America', 40668902, '11000800');
+INSERT INTO employee_bank_t VALUES (2, 2, 'Wells Fargo', 563678458, '21000025');
+INSERT INTO employee_bank_t VALUES (3, 3, 'Chase', 65325412, '11200060');
+INSERT INTO employee_bank_t VALUES (4, 4, 'Truist', 84563125, '38294884');
+INSERT INTO employee_bank_t VALUES (5, 5, 'Wells Fargo', 84521239, '21000025');
+INSERT INTO employee_bank_t VALUES (6, 6, 'Bank of America', 53316442, '11000800');
+INSERT INTO employee_bank_t VALUES (7, 7, 'Chase', 854621214, '11200060');
+INSERT INTO employee_bank_t VALUES (8, 8, 'Chase', 953123587, '11200060');
+INSERT INTO employee_bank_t VALUES (9, 9, 'Wells Fargo', 78526541, '21000025');
+INSERT INTO employee_bank_t VALUES (10, 10, 'Bank of America', 65845213, '11000800');
+
+DELETE FROM salary_t;
+INSERT INTO salary_t VALUES (1, '2023-3-1', 5989.00, 550.00, 300.00, 500.00, 479.12, 6789.00, 5759.88);
+INSERT INTO salary_t VALUES (2, '2023-3-1', 7200.00, 450.00, 000.00, 300.00, 576.00, 7500.00, 6474.00);
+INSERT INTO salary_t VALUES (3, '2023-3-1', 7600.00, 450.00, 000.00, 200.00, 608.00, 7800.00, 5030.00);
+INSERT INTO salary_t VALUES (4, '2023-3-1', 6200.00, 450.00, 000.00, 300.00, 496.00, 6500.00, 5554.00);
+INSERT INTO salary_t VALUES (5, '2023-3-1', 6780.00, 450.00, 000.00, 500.00, 542.40, 7280.00, 6287.60);
+INSERT INTO salary_t VALUES (6, '2023-3-1', 7200.00, 450.00, 000.00, 200.00, 576.00, 7400.00, 6374.00);
+INSERT INTO salary_t VALUES (7, '2023-3-1', 6700.00, 450.00, 000.00, 200.00, 536.00, 6900.00, 5914.00);
+INSERT INTO salary_t VALUES (8, '2023-3-1', 7800.00, 520.00, 100.00, 500.00, 624.00, 8400.00, 7256.00);
+INSERT INTO salary_t VALUES (9, '2023-3-1', 10200.00, 550.00, 250.00, 800.00, 816.00, 11250.00, 9884.00);
+INSERT INTO salary_t VALUES (10, '2023-3-1', 4450.00, 450.00, 300.00, 200.00, 356.00, 4950.00, 4144.00);
 /*
 INSERT INTO members_t VALUES (NULL, 'John', 'Doe', 1, 'USA', 'Texas', '1990-01-01', 'Male', CURRENT_TIMESTAMP, NULL, NULL);
 INSERT INTO members_t VALUES (NULL, 'Jane', 'Smith', 2, 'USA', 'Texas', '1985-05-10', 'Female', CURRENT_TIMESTAMP, NULL, NULL);

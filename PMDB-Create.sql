@@ -80,7 +80,7 @@ create table employees_t (
     joint_tax_filing boolean,
     no_dependents int(2),
     insurance_id int(8),
-    role_id	varchar(8),
+    role_id	int(8),
 	primary key (employee_id),
 	foreign key (employee_id) references members_t(member_id),
     foreign key (role_id) references role_t(role_id)
@@ -141,7 +141,7 @@ create table salary_breakdown_t (
     tax_on_amount decimal(13,2),
 	primary key (salary_id),
     foreign key (salary_id) references salary_t(salary_id),
-    foreign key (attendance_id) references attendance_t(attndance_id),
+    foreign key (attendance_id) references attendance_t(attendance_id),
     foreign key (insurance_id) references insurance_t(insurance_id),
     foreign key (allowance_1_id) references allowances_t(allowance_id),
 	foreign key (allowance_2_id) references allowances_t(allowance_id),

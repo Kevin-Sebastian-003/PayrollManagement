@@ -11,7 +11,7 @@ select  m.first_name, m.last_name, m.member_id, d.department_name, s.salary_mont
 	inner join employees_t e on m.member_id=e.employee_id
     inner join departments_t d on d.department_id=m.department_id
     inner join salary_t s on s.employee_id=e.employee_id
-    where month(s.salary_month)=month(curdate()) and year(s.salary_month)=year(curdate()) and d.department_name="JSOM";
+    where month(s.salary_month)=month(curdate()) and year(s.salary_month)=year(curdate()) and d.department_name="School of Management";
  
 select * from `salary_t`
 where after_tax_pay>8000;

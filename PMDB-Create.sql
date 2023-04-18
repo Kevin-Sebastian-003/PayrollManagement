@@ -252,3 +252,18 @@ CREATE TABLE insurance_t (
   insurance_description varchar(100) DEFAULT NULL,
   PRIMARY KEY (insurance_id)
 )ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+
+
+/*
+write 3 triggers
+1-update current address in contact table when the address is added into address table
+2-increase employee count in budget_allocation_t when employee is added into employees_t
+3-check if every salary record added is for a paid employee
+4-check if every paid employee with termination date null, has monthly salary record for current month
+
+write 2 stored procedures.... 
+1-calculate total salary from salary breakdown table
+2-calculate budget remaining using data provided
+3-provide tax on amount in salary_breakdown table by deducting deductions and adding allowances based on the tax bracket table
+4-encrypt values and return the encrypted form for storing ssn itin
+*/

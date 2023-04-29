@@ -8,7 +8,7 @@ use payrollmgmt_db;
 /*members are people who are affiliated to the university through some role (like a student)*/
 drop table if exists members_t;
 create table members_t (
-	member_id int(8) auto_increment,
+	member_id int auto_increment,
 	first_name varchar(25) not null,
 	last_name varchar(25),
 	department_id	int,
@@ -18,10 +18,12 @@ create table members_t (
 	gender varchar(12),
 	date_joining date default null,
 	date_leaving date default null,
-    contact_id int(8),
+    contact_id int,
+    role_id	int,
 	primary key (member_id),
 	foreign key (department_id) references departments_t(department_id),
-    foreign key (contact_id) references contact_t(contact_id)
+    foreign key (contact_id) references contact_t(contact_id),
+    foreign key (role_id) references role_t(role_id)
 )ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 
 
@@ -29,12 +31,12 @@ create table members_t (
 /*create trigger that updates the contact_t with the new address_id*/
 drop table if exists member_address_t;
 create table member_address_t (
-	address_id int(8) auto_increment,
-	member_id int(8),
+	address_id int auto_increment,
+	member_id int,
 	address_line_1 varchar(100),
 	address_line_2 varchar(100) default null,
 	city varchar(25),
-	zipcode	int(5),
+	zipcode	int,
 	state varchar(25),
 	country	varchar(25),
     primary key (address_id),
@@ -44,9 +46,9 @@ create table member_address_t (
 /*1-1 relationshipn with  members_t*/
 drop table if exists contact_t;
 create table contact_t (
-	contact_id int(8) auto_increment,
-	member_id int(8),
-	current_address_id int(8),
+	contact_id int auto_increment,
+	member_id int,
+	current_address_id int,
 	email_1 varchar(100) not null,
     email_2 varchar(100) default null,
     phone_no_1 varchar(25) not null,
@@ -61,9 +63,9 @@ create table contact_t (
 
 drop table if exists departments_t;
 create table departments_t (
-	department_id int(8) auto_increment,
+	department_id int auto_increment,
 	department_name varchar(50),
-	manager_id int(8),
+	manager_id int,
 	description varchar(100),
 	primary key (department_id),
 	foreign key (manager_id) references members_t(member_id)
@@ -72,23 +74,21 @@ create table departments_t (
 
 drop table if exists employees_t;
 create table employees_t (
-	employee_id int(8),
+	employee_id int,
     start_date date,
     end_date datetime,
 	current_salary decimal(13,2),
     marital_status boolean,
     joint_tax_filing boolean,
-    no_dependents int(2),
-    insurance_id int(8),
-    role_id	int(8),
+    no_dependents int,
+    insurance_id int,
 	primary key (employee_id),
-	foreign key (employee_id) references members_t(member_id),
-    foreign key (role_id) references role_t(role_id)
+	foreign key (employee_id) references members_t(member_id)
 )ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 
 drop table if exists role_t;
 create table role_t (
-	role_id	int(8) auto_increment,
+	role_id	int auto_increment,
     role_name varchar(25),
     role_description varchar(25),
     role_is_employee Boolean default false,
@@ -99,8 +99,8 @@ create table role_t (
 
 drop table if exists employee_bank_t;
 create table employee_bank_t (
-	account_id int(8),
-	employee_id int(8),
+	account_id int,
+	employee_id int,
     bank_name varchar(100),
     acct_no	varchar(25),
     routing_no varchar(25),
@@ -112,8 +112,8 @@ create table employee_bank_t (
 
 drop table if exists salary_t;
 create table salary_t (
-	salary_id int(25),
-	employee_id int(8),
+	salary_id int,
+	employee_id int,
 	salary_month date,
     salary_amount decimal(13,2),
 	primary key (salary_id),
@@ -123,20 +123,20 @@ create table salary_t (
 
 drop table if exists salary_breakdown_t;
 create table salary_breakdown_t (
-	salary_id int(25),
-    attendance_id int(8),
+	salary_id int,
+    attendance_id int,
     basic_pay decimal(13,2),
     hourle_pay_total decimal(13,2),
     overtime_pay_total decimal(13,2),
     hourly_rate decimal(5,2),
     overtime_rate decimal(13,2),
-    insurance_id int(8),
-	allowance_1_id int(8),
-    allowance_2_id int(8),
-    allowance_3_id int(8),
-    deduction_1_id int(8),
-    deduction_2_id int(8),
-    deduction_3_id int(8),
+    insurance_id int,
+	allowance_1_id int,
+    allowance_2_id int,
+    allowance_3_id int,
+    deduction_1_id int,
+    deduction_2_id int,
+    deduction_3_id int,
     tax_percentage decimal(13,2),
     tax_on_amount decimal(13,2),
 	primary key (salary_id),
@@ -154,13 +154,13 @@ create table salary_breakdown_t (
 /*update count in employee insertion function*/
 drop table if exists budget_allocation_t;
 create table budget_allocation_t (
-	budget_id int(8) auto_increment,
+	budget_id int auto_increment,
     month_year date,
-    department_id int(8),
+    department_id int,
     allocated_budget decimal(13,2),
     used_budget	decimal(10,4),
 	total_salary_paid decimal(14,2),
-    no_employees int(8),
+    no_employees int,
 	primary key (budget_id),
     foreign key (department_id) references departments_t(department_id)
 )ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
@@ -169,31 +169,31 @@ create table budget_allocation_t (
 
 drop table if exists deductions_t;
 create table deductions_t (
-	deduction_id	int (8) auto_increment,
-    deduction_name	varchar(25),
-    deduction_description	varchar(200),
-    deduction_amount	decimal(13,2),
+	deduction_id int auto_increment,
+    deduction_name varchar(25),
+    deduction_description varchar(200),
+    deduction_amount decimal(13,2),
 	primary key (deduction_id)
 )ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 
 
 drop table if exists allowances_t;
 create table allowances_t (
-	allowance_id	int (8) auto_increment,
+	allowance_id int auto_increment,
     allowance_name	varchar(25),
-    allowance_description	varchar(200),
-    allowance_amount	decimal(13,2),
+    allowance_description varchar(200),
+    allowance_amount decimal(13,2),
 	primary key (allowance_id)
 )ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 
 
 drop table if exists attendance_t;
 create table attendance_t (
-	attendance_id int(25)auto_increment,
-	employee_id	int(8),
-	daysattended int(8),
-    overtime_hours int(8),
-	totaldays int(8),
+	attendance_id int auto_increment,
+	employee_id	int,
+	days_attended int,
+    overtime_hours int,
+	total_days int,
 	attendance_month date,
     primary key (attendance_id),
     foreign key (employee_id) references employees_t(employee_id)
@@ -204,7 +204,7 @@ create table attendance_t (
 create a trigger to encrypt and a function to decrypt - the ssn and itin when adding a record and reading a record*/
 drop table if exists ssn_itin_t;
 create table ssn_itin_t (
-	employee_id	int(8),
+	employee_id	int,
     SSN	varchar(25) unique,
 	ITIN varchar(25) unique,
     primary key (employee_id),
@@ -233,10 +233,10 @@ deduction amount in deduction table is the minimum contribution towards 401k
 The contribution_amount field in this table contains the actual contribution made by employee for that year*/
 DROP TABLE IF EXISTS contribution401k_t;
 CREATE TABLE contribution401k_t (
-  member_id int(8) NOT NULL,
+  member_id int NOT NULL,
   financialyear varchar(25) DEFAULT NULL,
   contribution_amount decimal(13,2) DEFAULT NULL,
-  deduction_id int (8) DEFAULT NULL,
+  deduction_id int DEFAULT NULL,
   currentBalance decimal(13,2) DEFAULT NULL,
   FOREIGN KEY (member_id) REFERENCES members_t(member_id),
   FOREIGN KEY (deduction_id) REFERENCES deductions_t(deduction_id)
@@ -244,7 +244,7 @@ CREATE TABLE contribution401k_t (
 
 DROP TABLE IF EXISTS insurance_t;
 CREATE TABLE insurance_t (
-  insurance_id int(8) NOT NULL,
+  insurance_id int NOT NULL,
   insurance_name varchar(25) DEFAULT NULL,
   insured_amount decimal(13,2) DEFAULT NULL,
   principal_amount decimal(13,2) DEFAULT NULL,
@@ -253,13 +253,31 @@ CREATE TABLE insurance_t (
   PRIMARY KEY (insurance_id)
 )ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 
+delimiter ~
+CREATE TRIGGER update_current_address AFTER INSERT ON member_address_t
+FOR EACH ROW
+BEGIN
+  UPDATE contact_t SET current_address_id=NEW.address_id WHERE member_id=NEW.member_id;
+END~
+delimiter ;
+/*
+delimiter ~
+CREATE TRIGGER update_employee_count AFTER INSERT ON employees_t
+FOR EACH ROW
+BEGIN
+  UPDATE budget_allocation_t SET no_employees=employee_count+1 WHERE department_id=NEW.department_id;
+END;
+delimiter ;
+*/
 
 /*
 write 3 triggers
 1-update current address in contact table when the address is added into address table
 2-increase employee count in budget_allocation_t when employee is added into employees_t
-3-check if every salary record added is for a paid employee
+3-check if every salary record added is for a paid employee - after update
 4-check if every paid employee with termination date null, has monthly salary record for current month
+5-before delete add record to audit table
+add insert and delete
 
 write 2 stored procedures.... 
 1-calculate total salary from salary breakdown table

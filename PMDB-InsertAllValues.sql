@@ -1,3 +1,5 @@
+SET FOREIGN_KEY_CHECKS=0;
+# for insert allowances add a default allowance value of 0
 INSERT INTO members_t VALUES (DEFAULT, 'John', 'Doe', 1, 'USA', 'Texas', '1990-01-01', 'Male', '2020-01-01', NULL, 1);
 INSERT INTO members_t VALUES (DEFAULT, 'Jane', 'Doe', 2, 'USA', 'Texas', '1995-02-14', 'Female', '2021-03-15', NULL, 2);
 INSERT INTO members_t VALUES (DEFAULT, 'Mike', 'Smith', 3, 'USA', 'Texas', '1988-11-20', 'Male', '2019-05-02', '2022-01-01', 3);

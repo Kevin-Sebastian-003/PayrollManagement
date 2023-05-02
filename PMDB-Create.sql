@@ -253,6 +253,21 @@ CREATE TABLE insurance_t (
   PRIMARY KEY (insurance_id)
 )ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 
+drop table if exists employees_audit_t;
+create table employees_audit_t (
+	employee_id int,
+    start_date date,
+    end_date datetime,
+	current_salary decimal(13,2),
+    marital_status boolean,
+    joint_tax_filing boolean,
+    no_dependents int,
+    insurance_id int,
+	activity varchar(10),
+    activity_time datetime
+)ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+
+#update current address in contacts table when a member adds  new address
 delimiter ~
 CREATE TRIGGER update_current_address AFTER INSERT ON member_address_t
 FOR EACH ROW
@@ -269,6 +284,96 @@ BEGIN
 END;
 delimiter ;
 */
+#update employee termination date when the member leaves the institution
+delimiter ~
+CREATE TRIGGER update_employee_end_date AFTER UPDATE ON members_t
+FOR EACH ROW
+BEGIN
+  UPDATE employees_t e SET e.end_date=NEW.leaving_date WHERE e.employee_id=NEW.member_id;
+END~
+delimiter ;
+#add delete activity to employee_audit table fro audit
+delimiter ~
+CREATE TRIGGER audit_employee_delete BEFORE DELETE ON employees_t
+FOR EACH ROW
+BEGIN
+  INSERT INTO employees_audit_t values (
+	OLD.employee_id,
+    OLD.start_date,
+    OLD.end_date,
+	OLD.current_salary,
+    OLD.marital_status,
+    OLD.joint_tax_filing,
+    OLD.no_dependents,
+    OLD.insurance_id,
+	"DELETE",
+    now())
+  ;
+END~
+delimiter ;
+#add update activity to employee_audit table fro audit
+delimiter ~
+CREATE TRIGGER audit_employee_update BEFORE UPDATE ON employees_t
+FOR EACH ROW
+BEGIN
+  INSERT INTO employees_audit_t values (
+	OLD.employee_id,
+    OLD.start_date,
+    OLD.end_date,
+	OLD.current_salary,
+    OLD.marital_status,
+    OLD.joint_tax_filing,
+    OLD.no_dependents,
+    OLD.insurance_id,
+	"UPDATE",
+    now())
+  ;
+END~
+delimiter ;
+
+#salary calculator procedure
+delimiter ~
+CREATE PROCEDURE get_salary (IN employee_id int, IN salary_date date, OUT salary_total decimal(13,2))
+BEGIN
+    DECLARE allowance1 decimal(13,2);
+    DECLARE allowance2 decimal(13,2);
+    DECLARE allowance3 decimal(13,2);
+    DECLARE deduction1 decimal(13,2);
+    DECLARE deduction2 decimal(13,2);
+    DECLARE deduction3 decimal(13,2);
+    DECLARE insurance decimal(13,2);
+    DECLARE basicpay decimal(13,2);
+    DECLARE hourlypay decimal(13,2);
+    DECLARE overtimepay decimal(13,2);
+	DROP TEMPORARY TABLE IF EXISTS my_temp_table;
+    CREATE TEMPORARY TABLE my_temp_table 
+    SELECT * FROM salary_breakdown_t sbt where sbt.salary_id=(select salary_id from salary_t s where s.employee_id=employee_id and month(s.salary_month)=month(salary_date) and year(s.salary_month)=year(salary_date));
+    SELECT allowance_amount into allowance1 from allowances_t where allowance_id=(select allowance_1_id from my_temp_table);
+	SELECT allowance_amount into allowance2 from allowances_t where allowance_id=(select allowance_2_id from my_temp_table);
+    SELECT allowance_amount into allowance3 from allowances_t where allowance_id=(select allowance_3_id from my_temp_table);
+    SELECT deduction_amount into deduction1 from deductions_t where deduction_id=(select deduction_1_id from my_temp_table);
+    SELECT deduction_amount into deduction2 from deductions_t where deduction_id=(select deduction_2_id from my_temp_table);
+    SELECT deduction_amount into deduction3 from deductions_t where deduction_id=(select deduction_3_id from my_temp_table);
+    SELECT principal_amount into insurance from insurance_t where insurance_id=(select insurance_id from my_temp_table);
+    select basic_pay into basicpay from my_temp_table;
+    select hourly_pay_total into hourlypay from my_temp_table;
+    select overtime_pay_total into overtimepay from my_temp_table;
+    select (basicpay+hourlypay+overtimepay+allowance1+allowance2+allowance3-deduction1-deduction2-deduction3-insurance) into salary_total;
+END~
+delimiter ;
+
+#tax calculator procedure
+delimiter ~
+CREATE PROCEDURE get_tax (IN employee_id int, IN salary_date date, OUT tax_total decimal(13,2))
+BEGIN
+    DECLARE percentstate decimal(13,2);
+	DECLARE percentfederal decimal(13,2);
+    CALL getsalary(employee_id,salary_date,salary_total);
+    select income_tax_percentage into percentstate where salary_date between (start_year, end_year) and salary_total between (income_range_start, income_range_end) and tax_type="STATE";
+	select income_tax_percentage into percentfederal where salary_date between (start_year, end_year) and salary_total between (income_range_start, income_range_end) and tax_type="FEDERAL";
+    select (salary_total*percentstate+salary_total*percentfederal) into tax_total;
+END~
+delimiter ;
 
 /*
 write 3 triggers

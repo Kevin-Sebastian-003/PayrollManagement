@@ -1,4 +1,5 @@
 ###########################################################Drop everything if exists###########################################################
+drop database payrollmgmt_db;
 create database payrollmgmt_db;
 use payrollmgmt_db;
 drop table if exists members_t;

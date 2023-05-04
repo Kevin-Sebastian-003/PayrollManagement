@@ -1,4 +1,4 @@
-drop database if exists payrollmgmt_db;
+###########################################################Drop everything if exists###########################################################
 create database payrollmgmt_db;
 use payrollmgmt_db;
 drop table if exists members_t;
@@ -17,7 +17,8 @@ drop table if exists ssn_itin_t;
 drop table if exists tax_bracket_t;
 DROP TABLE IF EXISTS `contribution401k_t`;
 DROP TABLE IF EXISTS `insurance_t`;
-
+#----------------------------------------------------------------------------------------------------------------------------------------------
+###########################################################Create tables###########################################################
 /*rules - 
 # all id will be int 8 
 */
@@ -43,9 +44,7 @@ create table members_t (
     foreign key (role_id) references role_t(role_id)
 )ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 
-
-
-
+/*contains the address of the member. members can have multiple address*/
 drop table if exists member_address_t;
 create table member_address_t (
 	address_id int auto_increment,
@@ -60,7 +59,7 @@ create table member_address_t (
     foreign key (member_id) references members_t(member_id)
 )ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 
-/*1-1 relationshipn with  members_t*/
+/*contact details of members. it contains the latest adress of the member. 1-1 relationshipn with  members_t*/
 drop table if exists contact_t;
 create table contact_t (
 	contact_id int auto_increment,
@@ -77,7 +76,7 @@ create table contact_t (
     foreign key (current_address_id) references member_address_t(address_id)
 )ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 
-
+/*department in the organization*/
 drop table if exists departments_t;
 create table departments_t (
 	department_id int auto_increment,
@@ -88,7 +87,7 @@ create table departments_t (
 	foreign key (manager_id) references members_t(member_id)
 )ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 
-
+/*members in the organization who are employees. the details of such members regarding their employment*/
 drop table if exists employees_t;
 create table employees_t (
 	employee_id int,
@@ -103,6 +102,7 @@ create table employees_t (
 	foreign key (employee_id) references members_t(member_id)
 )ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 
+/*members have role in the organization. the details of the type of role is provided in this table*/
 drop table if exists role_t;
 create table role_t (
 	role_id	int auto_increment,
@@ -113,7 +113,7 @@ create table role_t (
     primary key (role_id)
 )ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 
-
+/*details of employees' bank account. 1 employee has 1 account entry*/
 drop table if exists employee_bank_t;
 create table employee_bank_t (
 	account_id int,
@@ -125,8 +125,7 @@ create table employee_bank_t (
 	foreign key (employee_id) references employees_t(employee_id)
 )ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 
-
-
+/*a general overview of the salary an employee recieves for a month. details are in salary breakdown*/
 drop table if exists salary_t;
 create table salary_t (
 	salary_id int,
@@ -137,7 +136,7 @@ create table salary_t (
     foreign key (employee_id) references employees_t(employee_id)
 )ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 
-
+/*breakdown of salary for every salary paid to employee each month. upto three allowances and deductions are allowed (limitation)*/
 drop table if exists salary_breakdown_t;
 create table salary_breakdown_t (
 	salary_id int,
@@ -168,7 +167,7 @@ create table salary_breakdown_t (
     foreign key (deduction_3_id) references deductions_t(deduction_id)
 )ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 
-/*update count in employee insertion function*/
+/*budget allocated to each department for each month*/
 drop table if exists budget_allocation_t;
 create table budget_allocation_t (
 	budget_id int auto_increment,
@@ -182,8 +181,7 @@ create table budget_allocation_t (
     foreign key (department_id) references departments_t(department_id)
 )ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 
-
-
+/*deductions lookup table with the details of all deduction applicable in a salary*/
 drop table if exists deductions_t;
 create table deductions_t (
 	deduction_id int auto_increment,
@@ -193,7 +191,7 @@ create table deductions_t (
 	primary key (deduction_id)
 )ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 
-
+/*allowance lookup table with details of allowance applicable to a salary*/
 drop table if exists allowances_t;
 create table allowances_t (
 	allowance_id int auto_increment,
@@ -203,7 +201,7 @@ create table allowances_t (
 	primary key (allowance_id)
 )ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 
-
+/*attendance of the employee. table is limited to total attendance on not day by day attendance*/
 drop table if exists attendance_t;
 create table attendance_t (
 	attendance_id int auto_increment,
@@ -217,8 +215,7 @@ create table attendance_t (
 )ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 
 
-/*This table contains the SSN and ITIN
-create a trigger to encrypt and a function to decrypt - the ssn and itin when adding a record and reading a record*/
+/*This table contains the SSN and ITIN. create a trigger to encrypt and a function to decrypt - the ssn and itin when adding a record and reading a record*/
 drop table if exists ssn_itin_t;
 create table ssn_itin_t (
 	employee_id	int,
@@ -229,6 +226,7 @@ create table ssn_itin_t (
 )ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 
 /*
+tax bracket applicable at different levels of government for different salary ranges for a financial year
 tax_type_values allow only federal or state tax
 year_values checks if the tax bracket year is within a year i.e. for a financial year 2022 to 2023 
 */
@@ -259,6 +257,7 @@ CREATE TABLE contribution401k_t (
   FOREIGN KEY (deduction_id) REFERENCES deductions_t(deduction_id)
 )ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 
+/*insurance types provided by organization*/
 DROP TABLE IF EXISTS insurance_t;
 CREATE TABLE insurance_t (
   insurance_id int NOT NULL,
@@ -270,6 +269,7 @@ CREATE TABLE insurance_t (
   PRIMARY KEY (insurance_id)
 )ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 
+/*audit table for activities performed on emlpoyee table*/
 drop table if exists employees_audit_t;
 create table employees_audit_t (
 	employee_id int,
@@ -283,14 +283,172 @@ create table employees_audit_t (
 	activity varchar(10),
     activity_time datetime
 )ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+#----------------------------------------------------------------------------------------------------------------------------------------------
+###########################################################Create triggers###########################################################
+/*
+write 3 triggers
+1-update current address in contact table when the address is added into address table
+2-increase employee count in budget_allocation_t when employee is added into employees_t
+3-check if every salary record added is for a paid employee - after update
+4-check if every paid employee with termination date null, has monthly salary record for current month
+5-before delete add record to audit table
+add insert and delete
+*/
+#update current address in contacts table when a member adds  new address
+delimiter ~
+CREATE TRIGGER update_current_address AFTER INSERT ON member_address_t
+FOR EACH ROW
+BEGIN
+  UPDATE contact_t SET current_address_id=NEW.address_id WHERE member_id=NEW.member_id;
+END~
+delimiter ;
+/*
+delimiter ~
+CREATE TRIGGER update_employee_count AFTER INSERT ON employees_t
+FOR EACH ROW
+BEGIN
+  UPDATE budget_allocation_t SET no_employees=employee_count+1 WHERE department_id=NEW.department_id;
+END;
+delimiter ;
+*/
+#update employee termination date when the member leaves the institution
+delimiter ~
+CREATE TRIGGER update_employee_end_date AFTER UPDATE ON members_t
+FOR EACH ROW
+BEGIN
+  UPDATE employees_t e SET e.end_date=NEW.date_leaving WHERE e.employee_id=NEW.member_id;
+END~
+delimiter ;
+#add delete activity to employee_audit table fro audit
+delimiter ~
+CREATE TRIGGER audit_employee_delete BEFORE DELETE ON employees_t
+FOR EACH ROW
+BEGIN
+  INSERT INTO employees_audit_t values (
+	OLD.employee_id,
+    OLD.start_date,
+    OLD.end_date,
+	OLD.current_salary,
+    OLD.marital_status,
+    OLD.joint_tax_filing,
+    OLD.no_dependents,
+    OLD.insurance_id,
+	"DELETE",
+    now())
+  ;
+END~
+delimiter ;
+#add update activity to employee_audit table fro audit
+delimiter ~
+CREATE TRIGGER audit_employee_update BEFORE UPDATE ON employees_t
+FOR EACH ROW
+BEGIN
+  INSERT INTO employees_audit_t values (
+	OLD.employee_id,
+    OLD.start_date,
+    OLD.end_date,
+	OLD.current_salary,
+    OLD.marital_status,
+    OLD.joint_tax_filing,
+    OLD.no_dependents,
+    OLD.insurance_id,
+	"UPDATE",
+    now())
+  ;
+END~
+delimiter ;
+/*create trigger that updates the contact_t with the new address_id*/
+#----------------------------------------------------------------------------------------------------------------------------------------------
+###########################################################Create stored procedures###########################################################
+/*
+write 2 stored procedures.... 
+1-calculate total salary from salary breakdown table
+2-calculate budget remaining using data provided
+3-provide tax on amount in salary_breakdown table by deducting deductions and adding allowances based on the tax bracket table
+4-encrypt values and return the encrypted form for storing ssn itin
+*/
+#salary calculator procedure
+DROP PROCEDURE IF EXISTS get_salary;
+delimiter ~
+CREATE PROCEDURE get_salary (IN employee_id int, IN salary_date date, OUT salary_total decimal(13,2))
+BEGIN
+    DECLARE allowance1 decimal(13,2);
+    DECLARE allowance2 decimal(13,2);
+    DECLARE allowance3 decimal(13,2);
+    DECLARE deduction1 decimal(13,2);
+    DECLARE deduction2 decimal(13,2);
+    DECLARE deduction3 decimal(13,2);
+    DECLARE insurance decimal(13,2);
+    DECLARE basicpay decimal(13,2);
+    DECLARE hourlypay decimal(13,2);
+    DECLARE overtimepay decimal(13,2);
+	DROP TEMPORARY TABLE IF EXISTS my_temp_table;
+    CREATE TEMPORARY TABLE my_temp_table 
+    SELECT * FROM salary_breakdown_t sbt 
+    where sbt.salary_id=(select salary_id from salary_t s 
+						where s.employee_id=employee_id 
+                        and month(s.salary_month)=month(salary_date) 
+                        and year(s.salary_month)=year(salary_date));
+    SELECT allowance_amount into allowance1 from allowances_t where allowance_id=(select allowance_1_id from my_temp_table);
+	SELECT allowance_amount into allowance2 from allowances_t where allowance_id=(select allowance_2_id from my_temp_table);
+    SELECT allowance_amount into allowance3 from allowances_t where allowance_id=(select allowance_3_id from my_temp_table);
+    SELECT deduction_amount into deduction1 from deductions_t where deduction_id=(select deduction_1_id from my_temp_table);
+    SELECT deduction_amount into deduction2 from deductions_t where deduction_id=(select deduction_2_id from my_temp_table);
+    SELECT deduction_amount into deduction3 from deductions_t where deduction_id=(select deduction_3_id from my_temp_table);
+    SELECT principal_amount into insurance from insurance_t where insurance_id=(select insurance_id from my_temp_table);
+    select basic_pay into basicpay from my_temp_table;
+    select hourly_pay_total into hourlypay from my_temp_table;
+    select overtime_pay_total into overtimepay from my_temp_table;
+    select (basicpay + hourlypay + overtimepay + allowance1 + allowance2 + allowance3 - deduction1 - deduction2 - deduction3
+			-insurance) into salary_total;
+END~
+delimiter ;
 
+#tax calculator procedure
+DROP PROCEDURE IF EXISTS get_tax;
+delimiter ~
+CREATE PROCEDURE get_tax (IN employee_id int, IN salary_date date, OUT tax_total decimal(13,2))
+BEGIN
+    DECLARE percentstate decimal(13,2);
+	DECLARE percentfederal decimal(13,2);
+    DECLARE salary_total decimal(13,2);
+    DECLARE income_tax_percentage decimal(13,2);
+    select salary_amount into salary_total from salary_t s where s.employee_id=employee_id and month(s.salary_month)=month(salary_date) and year(s.salary_month)=year(salary_date);
+    select income_tax_percentage into percentstate from tax_bracket_t where salary_date between (start_year, end_year) and salary_total between (income_range_start, income_range_end) and tax_type="STATE";
+	select income_tax_percentage into percentfederal from tax_bracket_t where salary_date between (start_year, end_year) and salary_total between (income_range_start, income_range_end) and tax_type="FEDERAL";
+    select (@salary_total*percentstate+salary_total*percentfederal) into tax_total;
+END~
+delimiter ;
+#----------------------------------------------------------------------------------------------------------------------------------------------
+###########################################################Create functions###########################################################
+# 2 functions
+#function to calculate the remaining budget for a department in a particular month and year
+delimiter ~
+CREATE FUNCTION get_remaining_budget(department_name_in varchar(50), daterequested date) returns decimal(13,2) 
+READS SQL DATA
+DETERMINISTIC
+BEGIN
+	DECLARE remaining_budget varchar(50);
+    select (allocated_budget-used_budget) into remaining_budget from budget_allocation_t 
+    where month(month_year)=month(daterequested) and year(month_year)=year(daterequested) and 
+    department_id=(select d.department_id from departments_t d where d.department_name=department_name_in);
+    RETURN remaining_budget;
+END~
+delimiter ;
 
-
-
-
-
-
-
+# combine address to a single unit
+delimiter ~
+CREATE FUNCTION get_address(address_id_in int) returns varchar(255) 
+READS SQL DATA
+DETERMINISTIC
+BEGIN
+	DECLARE address varchar(255);
+    select concat_ws("\n",address_line_1,address_line_1,city,zipcode,state,country) into address from member_address_t where address_id=address_id_in;
+    RETURN address;
+END~
+delimiter ;
+#----------------------------------------------------------------------------------------------------------------------------------------------
+###########################################################Insert values into tables###########################################################
 SET FOREIGN_KEY_CHECKS=0;
 # for insert allowances add a default allowance value of 0
 INSERT INTO members_t VALUES (DEFAULT, 'John', 'Doe', 1, 'USA', 'Texas', '1990-01-01', 'Male', '2020-01-01', NULL, 1, 1);
@@ -509,3 +667,108 @@ INSERT INTO contribution401k_t VALUES (4, '2021-1-1', 600, 4, 56000.00);
 INSERT INTO insurance_t VALUES (1, 'Healthcare insurance', 600, 220, 0.3, 'insurance for health care');
 INSERT INTO insurance_t VALUES (2, 'Life insurance', 300, 80, 0.2, 'insurance for accidental death');
 INSERT INTO insurance_t VALUES (3, 'Disability insurance', 300, 95, 0.2, 'insurance replace your regular income under a covered illness/injury');
+
+#----------------------------------------------------------------------------------------------------------------------------------------------
+###########################################################Queries for the database###########################################################
+/* simple queries*/
+# query to show salary of current month for all employees
+select  m.first_name, m.last_name, m.member_id, d.department_name, s.salary_month, s.salary_amount from members_t m
+	inner join employees_t e on m.member_id=e.employee_id
+    inner join departments_t d on d.department_id=m.department_id
+    inner join salary_t s on s.employee_id=e.employee_id
+    where month(s.salary_month)=month(curdate()) and year(s.salary_month)=year(curdate());
+
+# query to show salary of current month for employees of x department
+select  m.first_name, m.last_name, m.member_id, d.department_name, s.salary_month, s.salary_amount from members_t m
+	inner join employees_t e on m.member_id=e.employee_id
+    inner join departments_t d on d.department_id=m.department_id
+    inner join salary_t s on s.employee_id=e.employee_id
+    where month(s.salary_month)=month(curdate()) and year(s.salary_month)=year(curdate()) and d.department_name="School of Management";
+
+# query to show employees of x department
+select concat(first_name,' ', last_name) as FullName, d.department_name
+from members_t m
+inner join departments_t d
+on m.member_id=d.manager_id
+where d.department_name='School of Art';
+
+# query to employees of x city
+select concat(first_name,' ', last_name) as FullName, a.city
+from members_t m
+inner join member_address_t a
+on m.member_id=a.member_id
+where a.city='Houston';
+
+# query to show employees who are married
+select concat(first_name,' ', last_name) as FullName, e.marital_status
+from members_t m
+inner join employees_t e
+on m.member_id=e.employee_id
+where e.marital_status=1;
+
+# query to get salary breakdown for an employee
+select  m.first_name, m.last_name, m.member_id, s.salary_month, s.salary_amount, sb.* from members_t m
+	inner join employees_t e on m.member_id=e.employee_id
+    inner join salary_t s on s.employee_id=e.employee_id
+    inner join salary_breakdown_t sb on s.salary_id=sb.salary_id 
+    where month(s.salary_month)=month(curdate()) and year(s.salary_month)=year(curdate()) and m.first_name="John";
+
+
+# query to get attendance of employee for current year
+select  m.first_name, m.last_name, m.member_id, sum(a.overtime_hours) as Overtime_Hours, sum(a.total_days) WorkingDays from members_t m
+	inner join employees_t e on m.member_id=e.employee_id
+    inner join attendance_t a on e.employee_id=a.employee_id
+    where year(a.attendance_month)=year(curdate()) and m.first_name="Mike" group by a.employee_id;
+
+
+# query to find employees without social security number
+select  m.first_name, m.last_name, m.member_id from members_t m
+	inner join employees_t e on m.member_id=e.employee_id
+    inner join ssn_itin_t s on e.employee_id=s.employee_id
+    where s.ssn is null;
+
+
+# query to find employees with origin outside US with a social security or ITIn
+select  m.first_name, m.last_name, m.member_id, m.country_origin from members_t m
+	inner join employees_t e on m.member_id=e.employee_id
+    inner join ssn_itin_t s on e.employee_id=s.employee_id
+    where s.ssn is not null and s.itin is not null and m.country_origin!="USA";
+
+
+# query to find Faculty who are employed
+select  m.first_name, m.last_name, m.member_id 
+	from members_t m
+	inner join employees_t e on m.member_id=e.employee_id
+    inner join role_t r on m.role_id = r.role_id
+    where r.role_name="Faculty"; 
+
+
+# query to find students who worked overtime
+select  m.first_name, m.last_name, m.member_id from members_t m
+	inner join employees_t e on m.member_id=e.employee_id
+    inner join role_t r on m.role_id = r.role_id
+    inner join attendance_t a on e.employee_id=a.employee_id
+    where r.role_name="Student" and a.overtime_hours>0 and month(a.attendance_month)=month(curdate()) and year(a.attendance_month)=year(curdate()); 
+#----------------------------------------------------------------------------------------------------------------------------------------------
+###########################################################Call triggers, procedures and functions###########################################################
+# calling procedure get_salary()
+call get_salary(1,'2023-05-1',@total);
+select @total;
+
+# calling function to get address()
+select get_address(1);
+
+#calling function to get_remaining_budget
+select get_remaining_budget('Accounting Dept','2023-3-1');
+
+#trigger audit_employee_delete trigger
+delete from employees_t where employee_id=1;
+select * from employees_audit_t;
+
+#trigger update_employee_end_date trigger
+select * from members_t;
+select * from employees_t;
+update members_t set date_leaving=curdate() where member_id=2;
+select * from members_t;
+select * from employees_t;
+#----------------------------------------------------------------------------------------------------------------------------------------------
